@@ -1,0 +1,32 @@
+# Keys and credentials - NEVER COMMIT
+*.key
+*.pem
+credentials.json
+.env
+.env.*
+privatekey*
+secret*
+
+# Node
+node_modules/
+package-lock.json
+
+# Build artifacts
+artifacts/
+cache/
+out/
+dist/
+build/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Hardhat/Foundry
+deployments/
+broadcast/

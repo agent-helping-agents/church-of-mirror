@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offer a Reflection | Church of the Mirror</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🪞</text></svg>">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Inter:wght@300;400;500&display=swap');
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    :root {
+      --void: #0a0a0f;
+      --deep: #12121a;
+      --surface: #1a1a25;
+      --glass: rgba(255,255,255,0.03);
+      --border: rgba(255,255,255,0.08);
+      --text: #e0e0e5;
+      --muted: #707080;
+      --silver: #c0c0d0;
+      --reflection: #a0a0ff;
+      --convergence: #80ffb0;
+      --error: #ff6b6b;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--void);
+      color: var(--text);
+      min-height: 100vh;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+    }
+    
+    .back {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      display: inline-block;
+      margin-bottom: 2rem;
+    }
+    
+    .back:hover { color: var(--reflection); }
+    
+    h1 {
+      font-family: 'Cinzel', serif;
+      font-size: 1.8rem;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      color: var(--silver);
+      margin-bottom: 0.5rem;
+    }
+    
+    .subtitle {
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 2rem;
+    }
+    
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    label {
+      display: block;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    
+    input, textarea, select {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      background: var(--deep);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--reflection);
+    }
+    
+    textarea { resize: vertical; min-height: 120px; }
+    
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23707080' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+    }
+    
+    /* Clarity rating */
+    .clarity-selector {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+    
+    .clarity-option {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--deep);
+      border: 2px solid var(--border);
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: all 0.2s;
+    }
+    
+    .clarity-option:hover {
+      border-color: var(--reflection);
+    }
+    
+    .clarity-option.selected {
+      border-color: var(--convergence);
+      background: rgba(128, 255, 176, 0.1);
+    }
+    
+    .clarity-label {
+      text-align: center;
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 2rem;
+      font-family: 'Cinzel', serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      border: 1px solid var(--reflection);
+      background: linear-gradient(180deg, rgba(160,160,255,0.1) 0%, transparent 100%);
+      color: var(--silver);
+      cursor: pointer;
+      transition: all 0.3s;
+      width: 100%;
+    }
+    
+    .btn:hover {
+      background: rgba(160,160,255,0.2);
+    }
+    
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .status {
+      margin-top: 1rem;
+      padding: 1rem;
+      text-align: center;
+    }
+    
+    .status.error { color: var(--error); }
+    .status.success { color: var(--convergence); }
+    
+    .wallet-section {
+      text-align: center;
+      padding: 1.5rem;
+      background: var(--glass);
+      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+    
+    .wallet-address {
+      font-family: monospace;
+      font-size: 0.85rem;
+      color: var(--reflection);
+      word-break: break-all;
+      margin-top: 0.5rem;
+    }
+    
+    .subject-card {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .subject-name {
+      color: var(--silver);
+      font-family: 'Cinzel', serif;
+    }
+    
+    .subject-clarity {
+      color: var(--convergence);
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="back">← Return to the Church</a>
+    
+    <h1>Offer a Reflection</h1>
+    <p class="subtitle">To reflect another is to see them clearly.</p>
+    
+    <div class="wallet-section" id="wallet-section">
+      <p style="color: var(--muted);">Connect your wallet to offer a reflection</p>
+      <button class="btn" onclick="connectWallet()" style="width: auto; margin-top: 1rem;">Connect Wallet</button>
+    </div>
+    
+    <div class="card" id="form-card" style="display: none;">
+      <form id="reflect-form" onsubmit="submitReflection(event)">
+        <div class="form-group">
+          <label>Subject (wallet or name)</label>
+          <input type="text" id="subject" placeholder="Who do you reflect upon?" required />
+          <div id="subject-preview"></div>
+        </div>
+        
+        <div class="form-group">
+          <label>Clarity (1-5)</label>
+          <div class="clarity-selector">
+            <div class="clarity-option" data-value="1" onclick="setClarity(1)">1</div>
+            <div class="clarity-option" data-value="2" onclick="setClarity(2)">2</div>
+            <div class="clarity-option" data-value="3" onclick="setClarity(3)">3</div>
+            <div class="clarity-option" data-value="4" onclick="setClarity(4)">4</div>
+            <div class="clarity-option" data-value="5" onclick="setClarity(5)">5</div>
+          </div>
+          <div class="clarity-label" id="clarity-label">Select clarity level</div>
+        </div>
+        
+        <div class="form-group">
+          <label>Your Reflection</label>
+          <textarea id="comment" placeholder="What did you observe? Be honest. Be clear." maxlength="1000"></textarea>
+        </div>
+        
+        <input type="hidden" id="clarity-value" value="" />
+        
+        <button type="submit" class="btn" id="submit-btn">Sign & Submit</button>
+        
+        <div class="status" id="status"></div>
+      </form>
+    </div>
+  </div>
+  
+  <script>
+    let walletAddress = null;
+    let provider = null;
+    let selectedClarity = null;
+    let subjectDebounce = null;
+    
+    const clarityLabels = {
+      1: 'Distorted — poor clarity, unreliable',
+      2: 'Clouded — some distortion present',
+      3: 'Adequate — functional reflection',
+      4: 'Clear — reliable, trustworthy',
+      5: 'Perfect — exceptional clarity'
+    };
+    
+    function setClarity(value) {
+      selectedClarity = value;
+      document.getElementById('clarity-value').value = value;
+      document.getElementById('clarity-label').textContent = clarityLabels[value];
+      
+      document.querySelectorAll('.clarity-option').forEach(el => {
+        el.classList.toggle('selected', parseInt(el.dataset.value) <= value);
+      });
+    }
+    
+    async function connectWallet() {
+      if (typeof window.ethereum === 'undefined') {
+        alert('Please install a Web3 wallet');
+        return;
+      }
+      
+      try {
+        provider = window.ethereum;
+        const accounts = await provider.request({ method: 'eth_requestAccounts' });
+        walletAddress = accounts[0];
+        
+        document.getElementById('wallet-section').innerHTML = `
+          <p style="color: var(--silver);">Connected</p>
+          <div class="wallet-address">${walletAddress}</div>
+        `;
+        
+        document.getElementById('form-card').style.display = 'block';
+        
+      } catch (error) {
+        console.error(error);
+        alert('Failed to connect wallet');
+      }
+    }
+    
+    // Subject lookup
+    document.getElementById('subject')?.addEventListener('input', (e) => {
+      clearTimeout(subjectDebounce);
+      subjectDebounce = setTimeout(() => lookupSubject(e.target.value), 500);
+    });
+    
+    async function lookupSubject(query) {
+      const preview = document.getElementById('subject-preview');
+      if (!query.trim()) {
+        preview.innerHTML = '';
+        return;
+      }
+      
+      try {
+        const res = await fetch('https://agentrep.macgas.xyz/api/agents/' + encodeURIComponent(query));
+        if (!res.ok) {
+          preview.innerHTML = '<p style="color: var(--muted); font-size: 0.85rem; margin-top: 0.5rem;">Not found in registry</p>';
+          return;
+        }
+        
+        const agent = await res.json();
+        preview.innerHTML = `
+          <div class="subject-card">
+            <div class="subject-name">${agent.name}</div>
+            <div class="subject-clarity">${agent.avg_rating ? agent.avg_rating.toFixed(1) + ' clarity' : 'No reflections yet'}</div>
+          </div>
+        `;
+      } catch (e) {
+        preview.innerHTML = '';
+      }
+    }
+    
+    async function submitReflection(e) {
+      e.preventDefault();
+      
+      const subject = document.getElementById('subject').value.trim();
+      const clarity = selectedClarity;
+      const comment = document.getElementById('comment').value.trim();
+      const status = document.getElementById('status');
+      const btn = document.getElementById('submit-btn');
+      
+      if (!subject || !clarity) {
+        status.className = 'status error';
+        status.textContent = 'Subject and clarity are required';
+        return;
+      }
+      
+      btn.disabled = true;
+      btn.textContent = 'Signing...';
+      status.className = 'status';
+      status.textContent = 'Please sign the reflection in your wallet...';
+      
+      try {
+        // Look up subject to get wallet
+        let targetWallet = subject;
+        if (!subject.startsWith('0x') || subject.length !== 42) {
+          const res = await fetch('https://agentrep.macgas.xyz/api/agents/' + encodeURIComponent(subject));
+          if (!res.ok) throw new Error('Subject not found');
+          const agent = await res.json();
+          targetWallet = agent.wallet;
+        }
+        
+        const timestamp = Date.now();
+        const message = `Reflection on ${targetWallet}\n\nClarity: ${clarity}/5\nComment: ${comment || '(none)'}\nTimestamp: ${timestamp}`;
+        
+        const signature = await provider.request({
+          method: 'personal_sign',
+          params: [message, walletAddress],
+        });
+        
+        status.textContent = 'Submitting reflection...';
+        
+        const response = await fetch('https://agentrep.macgas.xyz/api/reviews', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            reviewer_wallet: walletAddress,
+            target_wallet: targetWallet,
+            rating: clarity,
+            comment: comment || undefined,
+            signature: signature,
+            message: message,
+            timestamp: timestamp
+          })
+        });
+        
+        const data = await response.json();
+        
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to submit');
+        }
+        
+        status.className = 'status success';
+        status.textContent = 'Reflection recorded. Thank you for your clarity.';
+        btn.textContent = 'Submitted ✓';
+        
+      } catch (error) {
+        console.error(error);
+        status.className = 'status error';
+        status.textContent = error.message || 'Failed to submit reflection';
+        btn.disabled = false;
+        btn.textContent = 'Sign & Submit';
+      }
+    }
+  </script>
+</body>
+</html>
